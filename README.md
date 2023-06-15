@@ -2,8 +2,8 @@
 
 **First in a series of AWS hands on workshops.**
 
-The list is available here - https://catalog.workshops.aws/general-immersionday/en-US.
-This is the first module. <br> It deals with **Cost Management and Optimization** and has tasks to monitor cost, create reports and organize information using tags when tracking spending across various AWS services. The second section has to do with ETL and creating visualisations using a dataset. I completed selected tasks in Section 1 that I needed to refresh my memory on. Section 2 was a really good learning experience. <br> Let's go over the different tasks. 
+The list is available here - https://catalog.workshops.aws/general-immersionday/en-US. <br>
+The first module, **Cost - Monitoring and Observability**, has exercises that help understand mechanisms to monitor cost, create reports and organize information using tags when tracking spending across various AWS services. The second section has to do with ETL and creating visualisations using a dataset. I completed selected tasks in Section 1 that I needed to refresh my memory on. Section 2 was a really good learning experience. Let's go over each section. 
 
 **Section 1:**
 
@@ -12,16 +12,15 @@ Cost Allocation tags are basically labels. A tag has a key and a value, tags all
 
 2. Cost Anomaly Detection. 
 This is another feature I explored. AWS Cost Anomaly Detection uses machine learning models to detect and alert on anomalous spend patterns in your deployed AWS services. Using this feature has the following benefits:
-    1. You can investigate the root cause of an anomaly
+    1. You can investigate the root cause of an anomaly.
     2. You can configure how to evaluate your costs. Do you want to analyze a specific member account only? Do you want to analyze AWS services independently?
     3. You can receive alerts in aggregate reports.
 
-    In my opinion it is better to setup anomaly monitors early on during account creation and budget allocation.
-    This is because it can take upto 24 hours to detect an anomaly after usage occurs, because Cost Anomaly Detection uses data from Cost Explorer, which has a delay of up to 24 hours. If you create a new monitor, it can take 24 hours to begin detecting new anomalies. For a new service subscription, 10 days of historical service usage data is needed before anomalies can be detected for that service.
-    This way when there is an anomaly we receive the alert within the expected amount of time so we can take necessary steps. 
+    In my opinion it would be a good idea to setup anomaly monitors early on during account creation and budget allocation.
+    This is because it can take upto 24 hours to detect an anomaly after usage occurs, because Cost Anomaly Detection uses data from Cost Explorer, which has a delay of up to 24 hours. If you create a new monitor, it can take 24 hours to begin detecting new anomalies. For a new service subscription, 10 days of historical service usage data is needed before anomalies can be detected for that service. This way when there is an anomaly we receive the alert within the expected amount of time so we can take necessary steps. 
 
 3. Cost Optimization - Rightsizing Recommendations.
-This feature reveiws the historical usage to identify opportunities for greater cost and usage efficiency. By default, 14 days of usage is considered. My AWS account being in the free tier, I did not have any data for AWS to analyze my spending pattern. So there were no recommendations for me. 
+This feature reviews historical usage to identify opportunities for greater cost and usage efficiency. By default, 14 days of usage is considered. My AWS account being in the free tier, I did not have any data for AWS to analyze my spending pattern. So there were no recommendations for me. 
 
 **Section 2:**
 
@@ -75,14 +74,14 @@ Using the queries provided in the instructions, created 6 views in Athena:
 
 Now moving on to QuickSight to build Visualizations from these views.
 
-**Amazon QuickSight** is a service that can be used to can access data and prepare it for use in reporting. QuickSight gives decision makers the opportunity to explore and interpret information in an interactive visual environment. They have secure access to dashboards from any device on the network and from mobile devices. Quicksight saves your prepared data either in SPICE memory or as a direct query. **SPICE**(Super-fast, Parallel, In-memory Calculation Engine) is the robust in-memory engine that QuickSight uses. **SPICE** is engineered to rapidly perform advanced calculations and serve data. 
+**Amazon QuickSight** is a service that can be used to can access data and prepare it for use in reporting. QuickSight gives decision makers the opportunity to explore and interpret information in an interactive visual environment. They have secure access to dashboards from any device on the network and from mobile devices. Quicksight saves your prepared data either in SPICE memory or as a direct query. **SPICE** (Super-fast, Parallel, In-memory Calculation Engine) is the robust in-memory engine that QuickSight uses. **SPICE** is engineered to rapidly perform advanced calculations and serve data. 
 
 Since this is my first time using Quicksight I had to setup a username and link it with my AWS account. After signing up for a QuickSight username I pointed it to the datasource. 
 
 ![Alt text](https://github.com/veeCan54/01-AWSCostManagementWS/blob/main/images/06-quickSightConfigured.png)
 
 Now we will be deploying the dashboards. For this we go to CloudShell. 
-**CloudShell** is pre-authenticated with our console credentials. CloudShell makes it easy to securely manage, explore, and interact with your AWS resources. It comes with 1 GB storage free per AWS region. It comes with AWS CLI, Python, Node.js to name a few tools. Files saved in your home directory are available in future sessions for the same AWS region. 
+**CloudShell** is pre-authenticated with our console credentials. CloudShell makes it easy to securely manage, explore, and interact with your AWS resources. CloudShell comes with 1 GB storage free per AWS region and with AWS CLI, Python, Node.js to name a few tools. Files saved in your home directory are available in future sessions for the same AWS region. 
 
 Uploaded the [ZIP file](https://github.com/veeCan54/01-AWSCostManagementWS/blob/main/files/STAMCostOpsSOW.zip), to Cloudshell home directory. 
 
@@ -97,6 +96,7 @@ pip3 install -U .
 
 cid-cmd deploy --recursive yes  -vvv
 ```
+Deployed Cost Intelligence Dashboard
 
 ![Alt text](https://github.com/veeCan54/01-AWSCostManagementWS/blob/main/images/07-cashDashboard.png)
 
@@ -106,7 +106,7 @@ Followed by CUDOS
 
 After deployment, the dashboards were available in QuickSight.
 
-I have to say these dashboards are pretty extensive. They provide several aggregations and the capability to look at various services, linked accounts, tags, to name a few. 
+I have to say these interactive dashboards are extensive and very detailed. They provide several aggregations and the capability to look at various AWS services, linked accounts, tags, to name a few. 
 
 Some screenshots: 
 
