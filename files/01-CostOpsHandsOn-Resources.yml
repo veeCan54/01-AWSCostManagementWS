@@ -3,12 +3,10 @@ Description: Creates a custom VPC and an EC2 instance
 Parameters:
   InstanceTypeParameter:
     Type: String
-    Default: t3.micro
+    Default: t2.micro
     AllowedValues:
-      - t3.micro
-      - t3.small
-      - t3.medium
-      - t3.large
+      - t2.micro
+      - t2.small
     Description: "Select an instance type."
 #Use public Systems Manager Parameter
   LatestAmiId:
@@ -23,6 +21,29 @@ Mappings:
     Public2:
       CIDR: 10.0.1.0/24
 Resources:
+  EC2SSMRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: MyEC2Role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore'
+  MyInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties: 
+      InstanceProfileName: demo-ec2-instance-profile
+      Path: /
+      Roles: 
+       - !Ref EC2SSMRole
   VPC1:
     Type: 'AWS::EC2::VPC'
     Properties:
@@ -182,6 +203,7 @@ Resources:
     Properties:
       InstanceType: !Ref InstanceTypeParameter
       ImageId: !Ref LatestAmiId
+      IamInstanceProfile: !Ref MyInstanceProfile
       UserData: 
         Fn::Base64:
           !Sub |
